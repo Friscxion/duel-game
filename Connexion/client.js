@@ -5,7 +5,6 @@ function hashPassword(password) {
     var iterations = 10000;
     crypto.pbkdf2(password, salt, iterations, 64, "sha512",(err, derivedKey) => {
         if (err) throw err;
-        console.log(derivedKey.toString('hex'));
         console.log({
             salt: salt,
             hash:derivedKey.toString('hex'),
@@ -15,4 +14,4 @@ function hashPassword(password) {
 
 
 }
-hashPassword("salut");
+hashPassword("passw0rd");

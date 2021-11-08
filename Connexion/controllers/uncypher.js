@@ -1,7 +1,7 @@
 const crypto = require("crypto");
 module.exports=(req,res,next)=>{
-    let {hash,salt,iterations}=req.body;
-    crypto.pbkdf2("salt", salt, iterations, 64, "sha512",(err, derivedKey) => {
+    let {hash,salt,iterations,password}=req.body;
+    crypto.pbkdf2(password, salt, iterations, 64, "sha512",(err, derivedKey) => {
         if (err) throw err;
         if(hash===derivedKey.toString('hex'))
             next();
