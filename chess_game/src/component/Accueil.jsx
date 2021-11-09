@@ -42,11 +42,11 @@ export default class Accueil extends React.Component{
                     <div className={"w-25"}>
                         <Form>
                             <Form.Group className="mb-3" controlId="nickname">
-                                <Form.Label>Email address</Form.Label>
+                                <Form.Label>Username</Form.Label>
                                 <Form.Control type="email" placeholder="Enter Username" value={this.state.nickname} onChange={this.setChange}/>
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="password">
-                                <Form.Label>Email address</Form.Label>
+                                <Form.Label>Password</Form.Label>
                                 <Form.Control type="password" placeholder="Enter Password" value={this.state.password} onChange={this.setChange}/>
                             </Form.Group>
                         </Form>
