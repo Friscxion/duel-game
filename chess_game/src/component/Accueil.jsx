@@ -1,10 +1,10 @@
 import React from "react";
-import { Button, Form, FormGroup, FormInput } from "shards-react";
+import { Button, Form, FormGroup} from "react-bootstrap";
 import crypto from "crypto";
 import axios from "axios";
 import Jeu from "./Jeu";
 
-export default class Acceuil extends React.Component{
+export default class Accueil extends React.Component{
     constructor(props) {
         super(props);
         this.state={
@@ -41,14 +41,14 @@ export default class Acceuil extends React.Component{
                 return(
                     <div className={"w-25"}>
                         <Form>
-                            <FormGroup>
-                                <label htmlFor="#username">Username</label>
-                                <FormInput id="nickname" placeholder="Username" value={this.state.nickname} onChange={this.setChange}/>
-                            </FormGroup>
-                            <FormGroup>
-                                <label htmlFor="#password">Password</label>
-                                <FormInput type="password" id="password" placeholder="Password" value={this.state.password} onChange={this.setChange} />
-                            </FormGroup>
+                            <Form.Group className="mb-3" controlId="nickname">
+                                <Form.Label>Email address</Form.Label>
+                                <Form.Control type="email" placeholder="Enter Username" />
+                            </Form.Group>
+                            <Form.Group className="mb-3" controlId="password">
+                                <Form.Label>Email address</Form.Label>
+                                <Form.Control type="password" placeholder="Enter Password" />
+                            </Form.Group>
                         </Form>
                         <Button theme={"success"} onClick={this.login}>Log In</Button>
                     </div>
