@@ -19,14 +19,14 @@ export default class Accueil extends React.Component{
         let iterations = 10000;
         crypto.pbkdf2(this.state.password, salt, iterations, 64, "sha512",(err, derivedKey) => {
             if (err) throw err;
-            axios.post("http://localhost:3002/connect", {
+            axios.post("http://localhost:3002/login", {
                 salt: salt,
                 hash: derivedKey.toString('hex'),
                 iterations: iterations,
                 nickname: this.state.nickname
             })
                 .then(r => this.setState({state:"success"}))
-                .catch(e=>this.setState({state:"failed"}));
+                .catch(e => this.setState({state:"failed"}));
         });
     }
 

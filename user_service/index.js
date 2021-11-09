@@ -7,7 +7,7 @@ const port = 3002;
 app.use(bodyParser.json());
 app.use(cors());
 
-app.use('/',require("./route"));
+app.use('/',require("./api/route"));
 
 app.listen(port, () => {
     console.log(`Micro service connexion http://localhost:${port}`);

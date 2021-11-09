@@ -1,9 +1,11 @@
 module.exports={
     name: "User",
+    primaryKey: "_id",
     properties: {
         _id: "int",
-        mail: "string",
+        email: "string",
         nickname: "string",
         password: "string",
+        token:"string?"
     },
 };
