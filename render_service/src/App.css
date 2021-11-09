@@ -2,7 +2,9 @@
   text-align: center;
   height: 100vh;
 }
-
+.register{
+  margin-top: auto;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
