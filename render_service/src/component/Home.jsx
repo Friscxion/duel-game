@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Form} from "react-bootstrap";
 import axios from "axios";
-import Jeu from "./Jeu";
+import Game from "./Game";
 import RegisterModal from "./RegisterModal";
 
 export default class Accueil extends React.Component{
@@ -45,7 +45,7 @@ export default class Accueil extends React.Component{
     render(){
         switch(this.state.state){
             case "success":
-                return <Jeu />
+                return <Game />
             default:
                 return(
                     <div className={"w-25 d-flex flex-column align-content-between h-50"}>
