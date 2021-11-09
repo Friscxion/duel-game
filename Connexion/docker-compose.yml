@@ -1,0 +1,17 @@
+networks:
+  tdl:
+    driver: bridge
+
+services:
+  tdl_api:
+    image: node:latest
+    container_name: tdl_api
+    networks:
+      - tdl
+    working_dir: /usr/src/app
+    ports:
+      - "3002:3002"
+    volumes:
+      - ./:/usr/src/app
+    command: node index.js
+
