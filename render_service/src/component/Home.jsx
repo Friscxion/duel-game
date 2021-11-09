@@ -1,10 +1,10 @@
 import React from "react";
-import { Button, Form} from "react-bootstrap";
+import {Button, Form} from "react-bootstrap";
 import axios from "axios";
 import Game from "./Game";
 import RegisterModal from "./RegisterModal";
 
-export default class Accueil extends React.Component{
+export default class Home extends React.Component{
     constructor(props) {
         super(props);
         this.state={

@@ -1,0 +1,17 @@
+networks:
+  tdl:
+    driver: bridge
+
+services:
+  tdl_api:
+    image: node:latest
+    container_name: middleware
+    networks:
+      - tdl
+    working_dir: /usr/src/app
+    ports:
+      - "3003:3003"
+    volumes:
+      - ./jwt_middleware/:/usr/src/app
+    command: node index.js
+
