@@ -27,7 +27,7 @@ export default class RegisterModal extends React.Component{
             password:require("../middleware/hashAndSalt")(this.state.password)
         }).then(({data})=>{
             console.log(data);
-            this.setState({showToast:true,show:false});
+            this.setState({showToast:true,show:false,email:"",password:"",nickname:""});
         }).catch((e)=>{
             this.setState({exist:true})
         })
