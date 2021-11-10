@@ -1,15 +1,15 @@
 const jwt = require("jsonwebtoken");
-const realm = require("../../bdd/myrealm");
 const bcrypt = require("bcryptjs");
+const knex=require("../knex_instance");
 
 module.exports=async (req,res)=> {
     try {
         const { nickname, password } = req.body;
-
+        console.log(req.body);
         if (!(nickname && password))
             return res.status(400).send("All input is required");
 
-        let user=await realm.write( () => realm.objects("User").filtered('nickname==$0', nickname)[0]);
+        let user=await knex("users").where("nickname",nickname).first();
 
         if(!user)
             return res.status(400).send("Invalid Credentials");
@@ -17,21 +17,20 @@ module.exports=async (req,res)=> {
         if(!await bcrypt.compare(password, user.password))
             return res.status(400).send("Invalid Credentials");
 
-        user=await realm.write( () => {
-            let userFound = realm.objects("User").filtered('nickname==$0', nickname)[0];
-            const token = jwt.sign(
-                {user_id: userFound._id, nickname},
-                process.env.TOKEN_KEY,
-                {
-                    expiresIn: "2h",
-                }
-            );
-            userFound.token=token;
-            return userFound;
-        });
+        const token = jwt.sign(
+            {user_id: user.id, nickname},
+            process.env.TOKEN_KEY,
+            {
+                expiresIn: "2h",
+            }
+        );
+        user.token=token;
 
-        if(user)
-            return res.status(200).send(user);
+        await knex("users").where("id",user.id).update(user);
+        let finalUser = await knex("users").where("id",user.id).first();
+
+        if(finalUser)
+            return res.status(200).send(finalUser);
         else
             return res.status(400).send("Invalid Credentials");
     } catch (err) {

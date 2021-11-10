@@ -32,7 +32,7 @@ export default class Home extends React.Component{
 
     checkToken=()=>{
         let token = localStorage.getItem("token") || this.state.token;
-        axios.post("http://localhost:3003/auth",{token:token}).then(({data})=>{
+        axios.post("http://localhost:3001/auth",{token:token}).then(({data})=>{
             this.setState({state:"success"});
         }).catch((e) => {
             this.setState({state:"failed"})

@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
-const realm = require("../../bdd/myrealm");
 const bcrypt = require("bcryptjs");
+const knex=require("../knex_instance");
 
 module.exports=async (req,res)=> {
     try {
@@ -14,9 +14,7 @@ module.exports=async (req,res)=> {
 
         // check if user already exist
         // Validate if user exist in our database
-        let oldUser=await realm.write(()=>{
-            return realm.objects("User").filtered('nickname==$0',nickname)[0];
-        });
+        let oldUser=await knex("users").where('nickname',nickname).first();
 
         if (oldUser) {
             return res.status(409).send("User Already Exist. Please Login");
@@ -25,25 +23,28 @@ module.exports=async (req,res)=> {
         //Encrypt user password
         let encryptedPassword = await bcrypt.hash(password, 10);
 
+
+
         // Create user in our database
-        let user = await realm.write(()=>{
-            let newUser = realm.create("User", {
-                _id: Date.now(),
-                nickname:nickname,
-                email: email.toLowerCase(),
-                password: encryptedPassword,
-            });
-            const token = jwt.sign(
-                {user_id: newUser._id, nickname},
-                process.env.TOKEN_KEY,
-                {
-                    expiresIn: "2h",
-                }
-            );
-            newUser.token = token;
-            return newUser;
-        })
-        res.status(201).json(user);
+        await knex("users").insert({
+            nickname:nickname,
+            email: email.toLowerCase(),
+            password: encryptedPassword
+        });
+        let user = await knex("users").where('nickname',nickname).first();
+
+        const token = jwt.sign(
+            {user_id: user.id, nickname},
+            process.env.TOKEN_KEY,
+            {
+                expiresIn: "2h",
+            }
+        );
+        user.token=token;
+
+        await knex("users").where("id",user.id).update(user);
+        let finalUser = await knex("users").where("id",user.id).first();
+        res.status(201).json(finalUser);
     } catch (err) {
         console.log(err);
     }

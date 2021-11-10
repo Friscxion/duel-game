@@ -1,17 +1,75 @@
 networks:
-  tdl:
+  duelgame:
     driver: bridge
 
 services:
-  tdl_api:
-    image: node:latest
-    container_name: middleware
+  react:
+    container_name: render_service
+    image: node:lts
+    working_dir: /usr/src/app
+    volumes:
+      - ./render_service:/usr/src/app
+    command: npm run dev
+    ports:
+      - "3000:3000"
     networks:
-      - tdl
+      - duelgame
+
+  middleware:
+    image: node:latest
+    container_name: jwt_middleware
+    networks:
+      - duelgame
     working_dir: /usr/src/app
     ports:
-      - "3003:3003"
+      - "3001:3001"
     volumes:
       - ./jwt_middleware/:/usr/src/app
     command: node index.js
 
+  user_service:
+    container_name: user_service
+    image: node:lts
+    env_file:
+      - ./user_service/api/.env
+    working_dir: /usr/src/app
+    volumes:
+      - ./user_service/api:/usr/src/app
+    command: npm run dev
+    ports:
+      - "3002:3002"
+    networks:
+      - duelgame
+    depends_on:
+      - db
+
+  ###############
+  ### DB ########
+  ###############
+  db:
+    container_name: db
+    image: mariadb:latest
+    restart: unless-stopped
+    #restart: always #for production only
+    env_file:
+      - ./user_service/bdd/.env
+    volumes:
+      - ./user_service/bdd/data:/var/lib/mysql
+      - ./user_service/bdd/scripts/schema.sql:/docker-entrypoint-initdb.d/1.sql
+      - ./user_service/bdd/scripts/data.sql:/docker-entrypoint-initdb.d/2.sql
+    networks:
+      - duelgame
+
+  #############
+  ## ADMINER ##
+  #############
+  adminer:
+    container_name: adminer
+    restart: unless-stopped
+    image: adminer
+    ports:
+      - "8181:8080"
+    networks:
+      - duelgame
+    depends_on:
+      - db
