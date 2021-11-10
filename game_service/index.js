@@ -5,9 +5,9 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 const cors = require('cors');
-const { connect } = require('http2');
 
 app.use(cors());
+
 io.on('connection', (socket) => {
     socket.on("createLobby", () => {
         let id = Date.now()+"";
