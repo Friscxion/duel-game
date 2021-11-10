@@ -1,5 +1,7 @@
 import React from "react";
 import axios from "axios";
+import { io } from "socket.io-client"
+import mysocket from "../middleware/mysocket";
 import {Button, FormControl} from "react-bootstrap";
 
 export default class Lobby extends React.Component{
@@ -24,13 +26,30 @@ export default class Lobby extends React.Component{
             this.setState({state:"failed"});
         });
     }
+    
+    createLobby = () => {
+            mysocket.on("message", () => {
+            console.log("message reçu")})
+            mysocket.emit("createLobby")
+          
+    
+        
+    }
+    joinLobby = () => {
+        mysocket.on("message", () => {
+        console.log("message reçu")})
+        mysocket.emit("joinLobby", this.state.code)
+        
+        
+    }
+    
 
     render() {
         return(
             <>
                 <div>
                     <p className={"text-dark my-2"}>Welcome 🙌 : {this.state.token.nickname}</p>
-                    <Button variant={"outline-dark"} className={"my-2"}>Create a new lobby</Button>
+                    <Button onClick={this.createLobby} variant={"outline-dark"} className={"my-2"}>Create a new lobby</Button>
                     <hr/>
                     <FormControl
                         className={"my-2"}
@@ -42,7 +61,7 @@ export default class Lobby extends React.Component{
                         onChange={({target})=>this.setState({[target.id]:target.value})}
                     />
 
-                    <Button variant={"outline-dark"} className={"my-2"}>Join the lobby</Button>
+                    <Button onClick={this.joinLobby} variant={"outline-dark"} className={"my-2"}>Join the lobby</Button>
                 </div>
 
 

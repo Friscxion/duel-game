@@ -77,7 +77,7 @@ export default class RegisterModal extends React.Component{
                    <Toast show={this.state.showToast} onClose={()=>this.setState({showToast:false})}>
                         <Toast.Header>
                             <strong className="me-auto text-success">Registered !</strong>
-                            <small>>1 min</small>
+                            <small> >1 min</small>
                         </Toast.Header>
                         <Toast.Body>Welcome, you can now connect!</Toast.Body>
                     </Toast>
