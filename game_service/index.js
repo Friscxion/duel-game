@@ -12,12 +12,17 @@ io.on('connection', (socket) => {
     socket.on("createLobby", () => {
         let id = Date.now()+"";
         socket.join(id);
-        console.log(id);
-        
+        io.sockets.in(id).emit("id_room",id);
     })
+
     socket.on("joinLobby", (room) => {
         socket.join(room);
-        io.sockets.in(room).emit("message","Hello");
+        io.sockets.in(room).emit("id_room",room);
+        io.sockets.in(room).emit("nb_player",io.sockets.adapter.rooms.get(room).size)
+    })
+
+    socket.on("nb_player", (room) => {
+        io.sockets.in(room).emit("nb_player",io.sockets.adapter.rooms.get(room).size)
     })
     
     

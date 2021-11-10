@@ -3,17 +3,22 @@ import axios from "axios";
 import { io } from "socket.io-client"
 import mysocket from "../middleware/mysocket";
 import {Button, FormControl} from "react-bootstrap";
+import Room from "./Room";
 
 export default class Lobby extends React.Component{
     constructor(props) {
         super(props);
         this.state={
             token:{nickname:""},
-            code:""
+            code:"",
+            room:""
         }
     }
     componentDidMount() {
-       this.checkToken();
+        mysocket.on("id_room",(room)=>{
+            this.setState({room:room});
+        })
+        this.checkToken();
     }
 
     checkToken=()=>{
@@ -36,6 +41,8 @@ export default class Lobby extends React.Component{
     
 
     render() {
+        if(this.state.room)
+            return(<Room room={this.state.room} socket={mysocket}/>)
         return(
             <>
                 <div>
