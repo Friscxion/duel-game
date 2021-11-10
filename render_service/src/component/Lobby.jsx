@@ -19,7 +19,6 @@ export default class Lobby extends React.Component{
     checkToken=()=>{
         let token = localStorage.getItem("token") || this.state.token;
         axios.post("http://localhost:3001/auth",{token:token}).then(({data})=>{
-            console.log(data)
             this.setState({state:"success",token:data});
         }).catch((e) => {
             this.props.home.setState({state:"failed"});
