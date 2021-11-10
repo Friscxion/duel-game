@@ -9,9 +9,9 @@ app.use(express.json());
 app.use(cors());
 
 app.post("/auth", auth, (req, res) => {
-    res.status(200).send("Welcome 🙌 ");
+    res.status(200).send({msg:"Welcome 🙌 ",...req.user});
 });
-app.post("/refresh", refresh);
+app.post("/refresh", auth, refresh);
 
 app.listen(port, () => {
     console.log(`Micro service middleware http://localhost:${port}`);

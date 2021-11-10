@@ -3,6 +3,7 @@ import {Button, Form} from "react-bootstrap";
 import axios from "axios";
 import Game from "./Game";
 import RegisterModal from "./RegisterModal";
+import Lobby from "./Lobby";
 
 export default class Home extends React.Component{
     constructor(props) {
@@ -45,7 +46,7 @@ export default class Home extends React.Component{
     render(){
         switch(this.state.state){
             case "success":
-                return <Game />
+                return <Lobby home={this}/>
             default:
                 return(
                     <div className={"w-25 d-flex flex-column align-content-between h-50"}>
