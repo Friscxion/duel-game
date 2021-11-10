@@ -1,7 +1,6 @@
 import React from "react";
 import {Button, Form} from "react-bootstrap";
 import axios from "axios";
-import Game from "./Game";
 import RegisterModal from "./RegisterModal";
 import Lobby from "./Lobby";
 
