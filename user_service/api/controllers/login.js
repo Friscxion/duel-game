@@ -5,7 +5,7 @@ const knex=require("../knex_instance");
 module.exports=async (req,res)=> {
     try {
         const { nickname, password } = req.body;
-        console.log(req.body);
+
         if (!(nickname && password))
             return res.status(400).send("All input is required");
 
