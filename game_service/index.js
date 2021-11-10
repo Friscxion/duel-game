@@ -10,21 +10,19 @@ const { connect } = require('http2');
 app.use(cors());
 io.on('connection', (socket) => {
     socket.on("createLobby", () => {
-      let id = Date.now();
+        let id = Date.now()+"";
         socket.join(id);
         console.log(id);
         
     })
-       socket.on("joinLobby", (room) => {
-      
+    socket.on("joinLobby", (room) => {
         socket.join(room);
-           io.sockets.in(room).emit("message","Hello");
+        io.sockets.in(room).emit("message","Hello");
     })
     
     
     console.log('a user connected');
     socket.emit("connected", true);
-    
 });
 
 app.get('/', (req, res) => {

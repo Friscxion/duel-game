@@ -28,19 +28,11 @@ export default class Lobby extends React.Component{
     }
     
     createLobby = () => {
-            mysocket.on("message", () => {
-            console.log("message reçu")})
-            mysocket.emit("createLobby")
-          
-    
-        
+        mysocket.emit("createLobby")
     }
+
     joinLobby = () => {
-        mysocket.on("message", () => {
-        console.log("message reçu")})
         mysocket.emit("joinLobby", this.state.code)
-        
-        
     }
     
 
