@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
 const knex=require("../knex_instance");
 
 module.exports=async (req,res)=> {
