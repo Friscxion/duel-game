@@ -1,6 +1,7 @@
 import React from "react";
 import {Button, Form, Modal, Toast, ToastContainer} from "react-bootstrap";
 import axios from "axios";
+import bcrypt from "bcryptjs";
 
 export default class RegisterModal extends React.Component{
     constructor(props) {
@@ -19,13 +20,13 @@ export default class RegisterModal extends React.Component{
     changeShow=()=>this.setState({show:!this.state.show});
 
     register = () =>{
-
+        let bcrypt=require('bcryptjs');
         if(!this.state.nickname || !this.state.password || !this.state.email)
             return this.setState({error:true});
         axios.post("http://localhost:3002/register",{
             nickname:this.state.nickname,
             email:this.state.email,
-            password:this.state.password
+            password:bcrypt.hashSync(this.state.password, 10)
         }).then(({data})=>{
             console.log(data);
             this.setState({showToast:true,show:false});

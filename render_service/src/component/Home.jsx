@@ -3,6 +3,7 @@ import {Button, Form} from "react-bootstrap";
 import axios from "axios";
 import Game from "./Game";
 import RegisterModal from "./RegisterModal";
+import bcrypt from "bcryptjs";
 
 export default class Home extends React.Component{
     constructor(props) {
@@ -18,10 +19,11 @@ export default class Home extends React.Component{
             this.checkToken();
     }
 
-    login=()=>{
+    login=async ()=>{
+        let bcrypt=require('bcryptjs');
         axios.post("http://localhost:3002/login",{
             nickname:this.state.nickname,
-            password:this.state.password
+            password:bcrypt.hashSync(this.state.password, 10)
         }).then(({data})=>{
             localStorage.setItem('token', data.token);
             this.setState({token:data.token},this.checkToken);

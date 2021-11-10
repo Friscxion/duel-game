@@ -14,7 +14,7 @@ module.exports=async (req,res)=> {
         if(!user)
             return res.status(400).send("Invalid Credentials");
 
-        if(!await bcrypt.compare(password, user.password))
+        if(!password==user.password)
             return res.status(400).send("Invalid Credentials");
 
         const token = jwt.sign(
@@ -30,7 +30,7 @@ module.exports=async (req,res)=> {
         let finalUser = await knex("users").where("id",user.id).first();
 
         if(finalUser)
-            return res.status(200).send(finalUser);
+            return res.status(200).send({token:token});
         else
             return res.status(400).send("Invalid Credentials");
     } catch (err) {

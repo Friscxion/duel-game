@@ -20,16 +20,11 @@ module.exports=async (req,res)=> {
             return res.status(409).send("User Already Exist. Please Login");
         }
 
-        //Encrypt user password
-        let encryptedPassword = await bcrypt.hash(password, 10);
-
-
-
         // Create user in our database
         await knex("users").insert({
             nickname:nickname,
             email: email.toLowerCase(),
-            password: encryptedPassword
+            password: password
         });
         let user = await knex("users").where('nickname',nickname).first();
 
