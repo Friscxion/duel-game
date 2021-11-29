@@ -1,6 +1,5 @@
 import React from "react";
 import axios from "axios";
-import { io } from "socket.io-client"
 import mysocket from "../middleware/mysocket";
 import {Button, FormControl} from "react-bootstrap";
 import Room from "./Room";
