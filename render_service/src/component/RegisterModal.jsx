@@ -21,7 +21,8 @@ export default class RegisterModal extends React.Component{
     register = () =>{
         if(!this.state.nickname || !this.state.password || !this.state.email)
             return this.setState({error:true});
-        axios.post("http://localhost:3002/register",{
+        const hostname = new URL(window.location.href).hostname;
+        axios.post("http://"+hostname+":3002/register",{
             nickname:this.state.nickname,
             email:this.state.email,
             password:require("../middleware/hashAndSalt")(this.state.password)

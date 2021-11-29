@@ -1,6 +1,5 @@
 import React from "react";
 import Game from "./Game";
-import {Button} from "react-bootstrap";
 
 export default class Room extends  React.Component{
     constructor(props) {

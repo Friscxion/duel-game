@@ -43,6 +43,18 @@ services:
     depends_on:
       - db
 
+  game_service:
+    image: node:latest
+    container_name: game_service
+    networks:
+      - duelgame
+    working_dir: /usr/src/app
+    ports:
+      - "3003:3003"
+    volumes:
+      - ./game_service/:/usr/src/app
+    command: node index.js
+
   ###############
   ### DB ########
   ###############

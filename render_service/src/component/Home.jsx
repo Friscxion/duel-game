@@ -19,7 +19,8 @@ export default class Home extends React.Component{
     }
 
     login=async ()=>{
-        axios.post("http://localhost:3002/login",{
+        const hostname = new URL(window.location.href).hostname;
+        axios.post("http://"+hostname+":3002/login",{
             nickname:this.state.nickname,
             password:require("../middleware/hashAndSalt")(this.state.password)
         }).then(({data})=>{
@@ -32,7 +33,8 @@ export default class Home extends React.Component{
 
     checkToken=()=>{
         let token = localStorage.getItem("token") || this.state.token;
-        axios.post("http://localhost:3001/auth",{token:token}).then(({data})=>{
+        const hostname = new URL(window.location.href).hostname;
+        axios.post("http://"+hostname+":3001/auth",{token:token}).then(({data})=>{
             this.setState({state:"success"});
         }).catch((e) => {
             this.setState({state:"failed"})

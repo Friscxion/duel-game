@@ -1,6 +1,8 @@
 const { io } = require("socket.io-client")
 
-const socket = io("http://localhost:3003/", {
+const hostname = new URL(window.location.href).hostname;
+
+const socket = io("http://"+hostname+":3003/", {
    transports: ['websocket']
 });
 
