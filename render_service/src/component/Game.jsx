@@ -90,6 +90,11 @@ export default class Game extends React.Component{
 
     render(){
         let winner= this.state.win;
+        let remplie=true;
+        this.state.board.forEach((cas)=>{
+            if(!cas)remplie=false;
+        })
+
         return (
             <div  className={"mt-5"}>
                 <div>
@@ -100,6 +105,14 @@ export default class Game extends React.Component{
                     <div>
                         <div className={"text-white "+(this.state.player===winner?"bg-success":"bg-danger")}>
                            {this.state.player===winner?"Won":"Lose"}
+                        </div>
+                        <Button variant={"outline-dark"} onClick={this.restart}>Restart</Button>
+                    </div>
+                    :null}
+                {remplie&&!winner?
+                    <div>
+                        <div className={"text-white bg-dark"}>
+                            Draw
                         </div>
                         <Button variant={"outline-dark"} onClick={this.restart}>Restart</Button>
                     </div>
