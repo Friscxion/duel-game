@@ -63,14 +63,8 @@ export default class Game extends React.Component{
         if(this.props.players<2)return;
         if(this.state.win)return;
         if(!(this.state.player==="X" || this.state.player==="O")) return;
+        if(!this.shouldIPlay())return;
         let board = [...this.state.board];
-        let player=board.reduce((a, v) => (v === this.state.player ? a + 1 : a), 0);
-        let enemy=board.reduce((a, v) => (v === (this.state.player==="X"?"O":"X") ? a + 1 : a), 0);
-        if(!(
-            (player<enemy)
-            ||
-            (this.state.player==="X"?player<=enemy:false)
-        ))return;
         if(!board[pos]) {
             board[pos] = this.state.player;
             this.setState({board:board},this.pass);
@@ -83,6 +77,13 @@ export default class Game extends React.Component{
         },this.pass)
     }
 
+    shouldIPlay = () =>{
+        let board = [...this.state.board];
+        let player=board.reduce((a, v) => (v === this.state.player ? a + 1 : a), 0);
+        let enemy=board.reduce((a, v) => (v === (this.state.player==="X"?"O":"X") ? a + 1 : a), 0);
+        if(!((player<enemy) || (this.state.player==="X"?player<=enemy:false)))return false;
+        else return true;
+    }
     render(){
         let winner= this.state.win;
         let remplie=true;
@@ -94,6 +95,7 @@ export default class Game extends React.Component{
             <div  className={"mt-5"}>
                 <div>
                     <h2 className={"font-weight-bold"}>Player : {this.state.player}</h2>
+                    {!winner&&!remplie?(this.shouldIPlay()?<h6 className={"text-success"}>Your turn!</h6>:<h6 className={"text-warning"}>Waiting for...</h6>):null}
                 </div>
                 <Board onClick={this.handleClick} value={this.state.board} />
                 {winner?
