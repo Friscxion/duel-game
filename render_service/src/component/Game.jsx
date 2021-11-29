@@ -1,12 +1,7 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import Board from './board'
-import Message from './message'
-import Refresh from './refresh'
 import {Button} from "react-bootstrap";
-/*
-socket.on("play", (index) => {
-      console.log("received index", index)
-    })*/
+
 const isWon = (board) => {
     // list of postion that is winning
     const lines = [
