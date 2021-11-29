@@ -1,6 +1,7 @@
 import React from 'react'
 import Board from './board'
 import {Button} from "react-bootstrap";
+import axios from "axios";
 
 const isWon = (board) => {
     // list of postion that is winning
@@ -49,6 +50,10 @@ export default class Game extends React.Component{
         })
     }
     componentDidUpdate(prevProps, prevState, snapshot) {
+        const hostname = new URL(window.location.href).hostname;
+        let token = localStorage.getItem("token");
+        axios.post("http://"+hostname+":3001/refresh",{token:token}).then(({data})=>localStorage.setItem("token",data.token.token)).catch(console.error);
+
         if(prevProps.player!==this.props.player)
             this.setState({player:this.props.player});
         if(prevState.board.join(".")!==[...this.state.board].join("."))

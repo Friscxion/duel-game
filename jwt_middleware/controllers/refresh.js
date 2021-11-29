@@ -3,11 +3,11 @@ const config = process.env;
 const axios = require("axios");
 
 const refreshToken = (req, res) => {
-    const hostname = new URL(window.location.href).hostname;
-    axios.post("http://"+hostname+":3002/refresh_token",{
-        nickname:this.state.nickname
+
+    axios.post("http://localhost:3002/refresh_token",{
+        nickname:req.user.nickname
     }).then(({data})=>{
-        res.status(200).send({token:""});
+        res.status(200).send({token:data});
     }).catch((e) => {
         this.setState({state:"failed"})
     });
